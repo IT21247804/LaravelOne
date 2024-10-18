@@ -32,31 +32,32 @@ This is an E-commerce Product Management System built using Laravel. The applica
 ```bash
 git clone https://github.com/IT21247804/LaravelOne.git
 cd LaravelOne
+```
 
 ### 2. Install dependencies
 ```bash
 composer install
-
+```
 ### 3. Configure Environment Variables
 ```bash
 cp .env.example .env
 DB_DATABASE=your_database_name
 DB_USERNAME=your_username
 DB_PASSWORD=your_password
-
+```
 
 ### 4. Generate Application Key
 ```bash
 php artisan key:generate
-
+```
 
 ### 5. Migrate the Database
 ```bash
 php artisan migrate
-
+```
 ### 6. Start the Development Server
 ```bash
 php artisan serve
-
+```
 
 ### You can access the application at http://localhost:8000.
