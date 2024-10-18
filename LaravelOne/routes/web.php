@@ -4,13 +4,19 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController; // Import the ProductController
 use App\Http\Controllers\CategoryController; // Import the CategoryController
+use App\Models\Product; // Import the Product model
+use App\Models\Category; // Import the Category model
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $products = Product::with('category')->get(); // Fetch all products with their categories
+    $categories = Category::all(); // Fetch all categories
+    return view('dashboard', compact('products', 'categories'));
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

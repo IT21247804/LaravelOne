@@ -1,6 +1,7 @@
 @extends('layouts.layout')
 
 @section('content')
+
     <div class="container">
         <h2>Products</h2>
         <a href="{{ route('products.create') }}" class="btn btn-primary">Add New Product</a>
@@ -10,7 +11,19 @@
                 {{ session('success') }}
             </div>
         @endif
-        
+
+        <!-- Filter by Category -->
+        <form method="GET" action="{{ route('products.index') }}" class="mb-4">
+            <select name="category" class="form-select" onchange="this.form.submit()">
+                <option value="">All Categories</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}" {{ $selectedCategory == $category->id ? 'selected' : '' }}>
+                        {{ $category->name }}
+                    </option>
+                @endforeach
+            </select>
+        </form>
+
         <table class="table table-bordered mt-3">
             <thead>
                 <tr>
@@ -42,5 +55,20 @@
                 @endforeach
             </tbody>
         </table>
+
+        <!-- Pagination Links -->
+        <!-- <div class="mt-4" style="text-align: center;">
+            <style>
+                .pagination .page-link {
+                    padding: 0.5rem 0.75rem; /* Adjust padding */
+                    font-size: 0.875rem; /* Adjust font size */
+                    margin: 0 0.1rem; /* Control spacing between buttons */
+                }
+                .pagination .page-item {
+                    display: inline-block; /* Align buttons inline */
+                }
+            </style>
+            {{ $products->appends(request()->input())->links() }}
+        </div> -->
     </div>
 @endsection

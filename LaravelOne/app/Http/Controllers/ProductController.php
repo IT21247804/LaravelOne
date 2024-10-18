@@ -9,11 +9,23 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     // 1. **GET**: Fetch all products (index)
-    public function index()
-    {
-        $products = Product::with('category')->get(); // Fetch all products with their associated categories
-        return view('products.index', compact('products'));
-    }
+    public function index(Request $request)
+{
+    // Fetch all categories for the filter dropdown
+    $categories = Category::all();
+    
+    // Get the selected category ID from the request
+    $selectedCategory = $request->get('category');
+
+    // Query products and apply filtering and pagination
+    $products = Product::with('category')
+        ->when($selectedCategory, function ($query) use ($selectedCategory) {
+            return $query->where('category_id', $selectedCategory);
+        })
+        ->paginate(10); // Adjust the number to set the number of items per page
+
+    return view('products.index', compact('products', 'categories', 'selectedCategory'));
+}
 
     // 2. **GET**: Show the form to create a new product (create)
     public function create()
