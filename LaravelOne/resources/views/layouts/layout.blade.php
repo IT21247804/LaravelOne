@@ -18,7 +18,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('categories.index') }}">Categories</a>
                 </li>
+                <li class="nav-item">
+                <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                {{ __('Dashboard') }}
+            </x-responsive-nav-link>  
+                </li>
             </ul>
+           
         </div>
     </nav>
 
