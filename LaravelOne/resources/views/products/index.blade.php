@@ -57,7 +57,7 @@
         </table>
 
         <!-- Pagination Links -->
-        <!-- <div class="mt-4" style="text-align: center;">
+        <div class="mt-4" style="text-align: center;">
             <style>
                 .pagination .page-link {
                     padding: 0.5rem 0.75rem; /* Adjust padding */
@@ -69,6 +69,6 @@
                 }
             </style>
             {{ $products->appends(request()->input())->links() }}
-        </div> -->
+        </div>
     </div>
 @endsection
