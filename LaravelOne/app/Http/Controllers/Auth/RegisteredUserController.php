@@ -28,23 +28,33 @@ class RegisteredUserController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+{
+    $request->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+        'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        'user_type' => ['required', 'in:user,admin'], // Validate user type
+        'admin_secret_key' => ['required_if:user_type,admin'], // Admin secret key validation
+    ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        event(new Registered($user));
-
-        Auth::login($user);
-
-        return redirect(route('dashboard', absolute: false));
+    // Check if the admin secret key matches the .env value
+    if ($request->user_type === 'admin' && $request->admin_secret_key !== env('ADMIN_SECRET_KEY')) {
+        return back()->withErrors(['admin_secret_key' => 'Invalid Admin Secret Key']);
     }
+
+    // Create the user with the selected user type
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'user_type' => $request->user_type, // Store the user type
+    ]);
+
+    event(new Registered($user));
+
+    Auth::login($user);
+
+    return redirect(route('dashboard'));
+}
+
 }
