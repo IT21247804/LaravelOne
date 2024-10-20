@@ -19,24 +19,32 @@
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
+            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Confirm Password -->
         <div class="mt-4">
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
+            <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+
+        <!-- User Type Dropdown -->
+        <div class="mt-4">
+            <x-input-label for="user_type" :value="__('Register as')" />
+            <select id="user_type" name="user_type" class="block mt-1 w-full" required onchange="toggleAdminKeyField()">
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+            </select>
+            <x-input-error :messages="$errors->get('user_type')" class="mt-2" />
+        </div>
+
+        <!-- Admin Secret Key (Hidden Field) -->
+        <div id="admin_secret_key_field" class="mt-4" style="display: none;">
+            <x-input-label for="admin_secret_key" :value="__('Admin Secret Key')" />
+            <x-text-input id="admin_secret_key" class="block mt-1 w-full" type="password" name="admin_secret_key" autocomplete="off" />
+            <x-input-error :messages="$errors->get('admin_secret_key')" class="mt-2" />
         </div>
 
         <div class="flex items-center justify-end mt-4">
@@ -49,4 +57,17 @@
             </x-primary-button>
         </div>
     </form>
+
+    <script>
+        function toggleAdminKeyField() {
+            var userType = document.getElementById('user_type').value;
+            var adminSecretKeyField = document.getElementById('admin_secret_key_field');
+            
+            if (userType === 'admin') {
+                adminSecretKeyField.style.display = 'block';
+            } else {
+                adminSecretKeyField.style.display = 'none';
+            }
+        }
+    </script>
 </x-guest-layout>
