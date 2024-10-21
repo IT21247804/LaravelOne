@@ -80,6 +80,11 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
     }
 
+ public function show(Product $product)
+ {
+    return view('products.show', compact('product'));
+ }
+
     public function userProducts(Request $request)
 {
     $categories = Category::all();  // Fetch all categories

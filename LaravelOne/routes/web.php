@@ -1,11 +1,12 @@
 <?php
-
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController; // Import the ProductController
 use App\Http\Controllers\CategoryController; // Import the CategoryController
 use App\Models\Product; // Import the Product model
 use App\Models\Category; // Import the Category model
+use App\Http\Controllers\PurchaseController; // Import the PurchaseController
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -20,13 +21,11 @@ Route::get('/dashboard', function () {
     }
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
+
     // Categories routes
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
@@ -45,9 +44,13 @@ Route::middleware('auth')->group(function () {
     Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
+    // User Products route
     Route::get('/user/products', [ProductController::class, 'userProducts'])->name('user-dashboard');
 
-
+    // Purchases routes
+   //Route::get('/purchases', [PurchaseController::class, 'index'])->name('products.show'); 
+    Route::post('/purchases', [PurchaseController::class, 'store'])->name('purchases.store'); // Create a new purchase
 });
 
 require __DIR__.'/auth.php';
+

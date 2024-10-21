@@ -19,15 +19,15 @@
 
                 <!-- Filter by Category -->
                 <form method="GET" action="{{ route('user-dashboard') }}" class="mb-4">
-            <select name="category" class="form-select" onchange="this.form.submit()">
-                <option value="">All Categories</option>
-                @foreach($categories as $category)
-                    <option value="{{ $category->id }}" {{ $selectedCategory == $category->id ? 'selected' : '' }}>
-                        {{ $category->name }}
-                    </option>
-                @endforeach
-            </select>
-        </form>
+                    <select name="category" class="form-select" onchange="this.form.submit()">
+                        <option value="">All Categories</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ $selectedCategory == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </form>
 
                 <table class="min-w-full bg-white mt-4">
                     <thead class="bg-gray-800 text-white">
@@ -36,7 +36,7 @@
                             <th class="py-2">Name</th>
                             <th class="py-2">Description</th>
                             <th class="py-2">Price</th>
-                            <th class="py-2">Purchase</th>
+                            <th class="py-2">View</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,7 +47,7 @@
                                 <td class="border px-4 py-2">{{ $product->description }}</td>
                                 <td class="border px-4 py-2">{{ $product->price }}</td>
                                 <td class="border px-4 py-2">
-                                    <a class="btn btn-primary" href="#" role="button">Purchase</a>
+                                <a class="btn btn-primary" href="{{ route('products.show', $product->id) }}" role="button">View</a>
                                 </td>
                             </tr>
                         @endforeach
