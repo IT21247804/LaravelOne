@@ -45,6 +45,13 @@ const App = () => {
                 {/* Features Section */}
                 <div className="mb-6">
                     <h2 className="text-2xl font-semibold mb-2 text-gray-800">User Authentication and Authorization</h2>
+                    <ul className="list-disc list-inside text-gray-600 space-y-2">
+                        <li>Administrator SignUp</li>
+                        <li>Administrator Signin</li>
+                        <li>User SignUp</li>
+                        <li>User Signin</li>
+                        
+                    </ul>
                 </div>
 
                 {/* Product Management Features */}
