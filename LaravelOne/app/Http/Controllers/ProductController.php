@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
+
 class ProductController extends Controller
 {
     // 1. **GET**: Fetch all products (index)
@@ -78,5 +79,22 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
     }
+
+    public function userProducts(Request $request)
+{
+    $categories = Category::all();  // Fetch all categories
+    $selectedCategory = $request->get('category');
+
+    // Fetch products based on selected category
+    $products = Product::with('category')
+        ->when($selectedCategory, function ($query) use ($selectedCategory) {
+            return $query->where('category_id', $selectedCategory);
+        })
+        ->get(); // Ensure you are retrieving the products collection
+
+    return view('user-dashboard', compact('products', 'categories', 'selectedCategory'));
+}
+
+    
 }
 

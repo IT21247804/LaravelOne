@@ -11,9 +11,13 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $products = Product::with('category')->get(); // Fetch all products with their categories
-    $categories = Category::all(); // Fetch all categories
-    return view('dashboard', compact('products', 'categories'));
+    if (Auth::user()->is_admin) {
+        $products = Product::with('category')->get();
+        $categories = Category::all();
+        return view('dashboard', compact('products', 'categories')); // Admin dashboard
+    } else {
+        return redirect()->route('user-dashboard');
+    }
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
@@ -40,6 +44,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
     Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+
+    Route::get('/user/products', [ProductController::class, 'userProducts'])->name('user-dashboard');
+
+
 });
 
 require __DIR__.'/auth.php';
