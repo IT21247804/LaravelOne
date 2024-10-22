@@ -15,25 +15,16 @@ const App = () => {
             {/* Navigation */}
             {isAuthenticated() ? (
                 <nav className="-mx-3 flex flex-1 justify-end">
-                    <a
-                        href="/dashboard"
-                        className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                    >
+                    <a href="/dashboard" className="rounded-md px-3 py-2 text-black hover:text-black/70">
                         Dashboard
                     </a>
                 </nav>
             ) : (
                 <nav className="-mx-3 flex flex-1 justify-end">
-                    <a
-                        href="/login"
-                        className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                    >
+                    <a href="/login" className="rounded-md px-3 py-2 text-black hover:text-black/70">
                         Log in
                     </a>
-                    <a
-                        href="/register"
-                        className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                    >
+                    <a href="/register" className="rounded-md px-3 py-2 text-black hover:text-black/70">
                         Register
                     </a>
                 </nav>
