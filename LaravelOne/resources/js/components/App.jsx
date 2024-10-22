@@ -14,17 +14,26 @@ const App = () => {
 
             {/* Navigation */}
             {isAuthenticated() ? (
-                <nav className="-mx-3 flex flex-1 justify-end">
-                    <a href="/dashboard" className="rounded-md px-3 py-2 text-black hover:text-black/70">
+                <nav className="-mx-3 flex flex-1 justify-end space-x-4">
+                    <a
+                        href="/dashboard"
+                        className="rounded-md px-4 py-2 bg-blue-500 text-white hover:bg-blue-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    >
                         Dashboard
                     </a>
                 </nav>
             ) : (
-                <nav className="-mx-3 flex flex-1 justify-end">
-                    <a href="/login" className="rounded-md px-3 py-2 text-black hover:text-black/70">
+                <nav className="-mx-3 flex flex-1 justify-end space-x-4">
+                    <a
+                        href="/login"
+                        className="rounded-md px-4 py-2 bg-blue-500 text-white hover:bg-blue-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    >
                         Log in
                     </a>
-                    <a href="/register" className="rounded-md px-3 py-2 text-black hover:text-black/70">
+                    <a
+                        href="/register"
+                        className="rounded-md px-4 py-2 bg-blue-500 text-white hover:bg-blue-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    >
                         Register
                     </a>
                 </nav>
