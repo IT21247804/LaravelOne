@@ -29,7 +29,8 @@ class PurchaseController extends Controller
             'quantity' => $request->input('quantity')
         ]);
 
-        return response()->json(['message' => 'Purchase successful']);
+       // return response()->json(['message' => 'Purchase successful']);
+       return redirect()->route('user-dashboard');
     } catch (\Illuminate\Validation\ValidationException $e) {
         // Log validation errors
         Log::error('Validation error during purchase: ', $e->errors());
