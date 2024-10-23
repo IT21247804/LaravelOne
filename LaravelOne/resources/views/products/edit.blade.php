@@ -14,9 +14,10 @@
             </div>
         @endif
 
-        <form action="{{ route('products.update', $product->id) }}" method="POST">
+        <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
+            
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" name="name" value="{{ $product->name }}" required>
@@ -39,6 +40,22 @@
                         <option value="{{ $category->id }}" {{ $category->id == $product->category_id ? 'selected' : '' }}>{{ $category->name }}</option>
                     @endforeach
                 </select>
+            </div>
+
+            <!-- Display Current Image -->
+            <div class="form-group">
+                <label>Current Image</label><br>
+                @if ($product->image)
+                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" width="150"><br>
+                @else
+                    <p>No image uploaded.</p>
+                @endif
+            </div>
+
+            <!-- File Input for New Image -->
+            <div class="form-group">
+                <label for="image">Upload New Image (optional)</label>
+                <input type="file" class="form-control" name="image" accept="image/*">
             </div>
 
             <button type="submit" class="btn btn-success">Update Product</button>

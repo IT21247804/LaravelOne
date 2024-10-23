@@ -17,7 +17,7 @@
                     </x-nav-link>
 
                     <!-- Conditionally show these links only for admin users -->
-                    @if (Auth::user()->role === 'admin')
+                    @if (Auth::user()->user_type === 'admin')
                         <!-- Products Link -->
                         <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.index')">
                             {{ __('Products') }}

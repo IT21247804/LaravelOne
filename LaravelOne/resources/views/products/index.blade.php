@@ -32,6 +32,7 @@
                     <th>Description</th>
                     <th>Price</th>
                     <th>Category</th>
+                    <th>Image</th> <!-- Add this column for images -->
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -43,6 +44,14 @@
                         <td>{{ $product->description }}</td>
                         <td>{{ $product->price }}</td>
                         <td>{{ $product->category->name }}</td>
+                        <td>
+                            <!-- Check if the product has an image and display it -->
+                            @if($product->image)
+                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" width="100"> <!-- Image column -->
+                            @else
+                                <span>No Image</span>
+                            @endif
+                        </td>
                         <td>
                             <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning">Edit</a>
                             <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display:inline-block;">
@@ -71,4 +80,5 @@
             {{ $products->appends(request()->input())->links() }}
         </div>
     </div>
+
 @endsection

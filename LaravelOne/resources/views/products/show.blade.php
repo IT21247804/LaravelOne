@@ -10,7 +10,15 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h3 class="text-2xl font-bold">{{ $product->name }}</h3>
-                    <p>{{ $product->description }}</p>
+                    
+                    <!-- Product Image -->
+                    @if($product->image)
+                        <div class="mt-4">
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-auto rounded-md shadow-md">
+                        </div>
+                    @endif
+
+                    <p class="mt-4">{{ $product->description }}</p>
                     <p class="mt-4 text-lg">Price: ${{ $product->price }}</p>
 
                     <!-- Purchase Button -->
@@ -58,11 +66,7 @@
             button.addEventListener('click', function() {
                 const modalId = this.getAttribute('data-modal-toggle');
                 const modal = document.getElementById(modalId);
-                if (modal.classList.contains('hidden')) {
-                    modal.classList.remove('hidden');
-                } else {
-                    modal.classList.add('hidden');
-                }
+                modal.classList.toggle('hidden');
             });
         });
     </script>

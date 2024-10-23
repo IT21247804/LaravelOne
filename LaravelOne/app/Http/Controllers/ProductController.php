@@ -42,35 +42,67 @@ class ProductController extends Controller
             'name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
-            'category_id' => 'required'
+            'category_id' => 'required',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048' // Validate the image
         ]);
-
-        Product::create($request->all()); // Create a new product with the validated data
-
+    
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('product_images', 'public');
+        } else {
+            $imagePath = null;
+        }
+    
+        // Create the product with image path
+        Product::create(array_merge(
+            $request->all(),
+            ['image' => $imagePath]
+        ));
+    
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
 
-    // 4. **GET**: Show the form to edit an existing product (edit)
-    public function edit(Product $product)
+    public function edit($id)
     {
-        $categories = Category::all(); // Fetch all categories for the dropdown
+        // Find the product by ID
+        $product = Product::findOrFail($id);
+        // Get all categories for the dropdown
+        $categories = Category::all();
+        // Return the edit view with the product and categories
         return view('products.edit', compact('product', 'categories'));
     }
-
-    // 5. **PUT/PATCH**: Update the specified product in the database (update)
+    
     public function update(Request $request, Product $product)
     {
         $request->validate([
             'name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
-            'category_id' => 'required'
+            'category_id' => 'required',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048' // Validate the image
         ]);
-
-        $product->update($request->all()); // Update the product with new data
-
+    
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($product->image) {
+                \Storage::delete('public/' . $product->image);
+            }
+    
+            // Store new image
+            $imagePath = $request->file('image')->store('product_images', 'public');
+        } else {
+            $imagePath = $product->image; // Keep existing image if no new one is uploaded
+        }
+    
+        // Update product with new data
+        $product->update(array_merge(
+            $request->all(),
+            ['image' => $imagePath]
+        ));
+    
         return redirect()->route('products.index')->with('success', 'Product updated successfully.');
-    }
+    }    
 
     // 6. **DELETE**: Remove the specified product from the database (destroy)
     public function destroy(Product $product)
@@ -95,7 +127,7 @@ class ProductController extends Controller
         ->when($selectedCategory, function ($query) use ($selectedCategory) {
             return $query->where('category_id', $selectedCategory);
         })
-        ->get(); // Ensure you are retrieving the products collection
+        ->paginate(10); // Ensure you are retrieving the products collection
 
     return view('user-dashboard', compact('products', 'categories', 'selectedCategory'));
 }
