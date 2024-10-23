@@ -12,8 +12,9 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    if (Auth::user()->is_admin) {
-        $products = Product::with('category')->get();
+    if (Auth::user()->user_type === 'admin') {
+        // Change to paginate products, for example 5 per page
+        $products = Product::with('category')->paginate(5);
         $categories = Category::all();
         return view('dashboard', compact('products', 'categories')); // Admin dashboard
     } else {

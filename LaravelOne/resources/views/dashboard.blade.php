@@ -29,22 +29,18 @@
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900">
-                            {{ __("You're logged in as Administrator!") }}
+                            <!-- Removed the logged-in message -->
                         </div>
                     </div>
 
-                    <div class="mt-6">
-                        <h3 class="text-xl font-bold mb-4">Manage Products and Categories</h3>
-                        <p>Use the sidebar to view and manage products and categories.</p>
-                    </div>
-
-                    <!-- Products Table (Initially hidden) -->
-                    <div id="products" class="mt-6 hidden">
+                    <!-- Products Table (Initially visible) -->
+                    <div id="products" class="mt-6">
                         <h3 class="text-xl font-bold mb-4">Products</h3>
                         <table class="min-w-full bg-white">
                             <thead class="bg-gray-800 text-white">
                                 <tr>
                                     <th class="py-2">ID</th>
+                                    <th class="py-2">Image</th>
                                     <th class="py-2">Name</th>
                                     <th class="py-2">Description</th>
                                     <th class="py-2">Price</th>
@@ -55,6 +51,13 @@
                                 @foreach($products as $product)
                                     <tr>
                                         <td class="border px-4 py-2">{{ $product->id }}</td>
+                                        <td class="border px-4 py-2">
+                                            @if($product->image)
+                                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-16 h-16 object-cover rounded">
+                                            @else
+                                                <span>No Image</span>
+                                            @endif
+                                        </td>
                                         <td class="border px-4 py-2">{{ $product->name }}</td>
                                         <td class="border px-4 py-2">{{ $product->description }}</td>
                                         <td class="border px-4 py-2">{{ $product->price }}</td>
@@ -63,6 +66,20 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        <!-- Pagination Links -->
+                        <div class="mt-4">
+                        <style>
+                .pagination .page-link {
+                    padding: 0.5rem 0.75rem; /* Adjust padding */
+                    font-size: 0.875rem; /* Adjust font size */
+                    margin: 0 0.1rem; /* Control spacing between buttons */
+                }
+                .pagination .page-item {
+                    display: inline-block; /* Align buttons inline */
+                }
+            </style>
+                            {{ $products->links() }}
+                        </div>
                     </div>
 
                     <!-- Categories Table (Initially hidden) -->

@@ -13,14 +13,12 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-    $table->unsignedBigInteger('product_id');
-    $table->unsignedBigInteger('user_id');  // Foreign key to track the purchaser
-    $table->integer('quantity');            // To track quantity purchased
-    $table->timestamps();
-    
-    // Foreign key constraints
-    $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-    $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+             $table->unsignedBigInteger('product_id');  // Foreign key for product
+            $table->unsignedBigInteger('user_id');     // Foreign key for user
+            $table->integer('quantity');               // Purchase quantity
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->timestamps(); 
         });
     }
 

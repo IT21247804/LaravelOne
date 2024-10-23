@@ -13,7 +13,7 @@
         </div>
     @endif
 
-    <form action="{{ route('products.store') }}" method="POST">
+    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="name">Name</label>
@@ -35,6 +35,10 @@
                 @endforeach
             </select>
         </div>
+        <div class="form-group">
+        <label for="image">Product Image</label>
+        <input type="file" class="form-control" id="image" name="image" required>
+    </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 @endsection
