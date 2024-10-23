@@ -24,7 +24,7 @@
         window.authenticated = {{ auth()->check() ? 'true' : 'false' }};
     </script>
     
-    <div id="app"></div> <!-- This is where your React app will mount -->
+    <div id="app"></div> 
     
     </body>
 </html>
